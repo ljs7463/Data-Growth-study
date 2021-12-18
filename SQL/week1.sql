@@ -29,7 +29,7 @@ where name = 'Sci-Fi';
 select count(distinct(rating)) from film;
 
 -- 7. 대여 기간이 (회수 - 대여일) 10일 이상이였던 rental 테이블에 대한 모든 정보를 알려주세요.(단, 대여기간은 대여일자부터 대여기간으로 포함하여 계산합니다.)
--- date함수르 사용항 "년-월-일" 로 변경해주고 연산을 하면되는 단수 조건무 활용문제이다. 주의할점은 대여일자를 포함해야하 때문에 "+1일" 을 해주어야한다.
+-- date함수를 사용할 "년-월-일" 로 변경해주고 연산을 하면되는 단수 조건문 활용문제이다. 주의할점은 대여일자를 포함해야하 때문에 "+1일" 을 해주어야한다.
 select * from rental 
 where date(return_date) - date(rental_date) + 1  >= 10
 
@@ -39,7 +39,7 @@ select customer_id, first_name, last_name, email  from customer
 where mod(customer_id,50) =0;
 
 -- 9. 영화 제목의 길이가 8글자인, 영화 제목 리스트를 나열해 주세요.
--- length 함수를 통해서 선택한 필드내 각 레코드의 길이르 조회할 수 있다.
+-- length 함수를 통해서 선택한 필드내 각 레코드의 길이를 조회할 수 있다.
 select title from film 
 where length(title) =8;
 
