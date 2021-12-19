@@ -2,8 +2,6 @@
 -- 날짜는 중복이 되기때문에 "distinct"를 반드시 넣어주어야 하며, 시간을 추출하는 "date" 함수 역시 실제로 많이 활용된다.
 select distinct(date(rental_date)) from rental;
 
-
-
 -- 2. 영화길이가 120분 이상이면서, 대여기간이 4일 이상이 가능한, 영화제목을 알려주세요.
 -- 비교연산자를 넣어서 조건을 완성해 주면 된다.
 select title from film 
@@ -47,9 +45,48 @@ where length(title) =8;
 select count(city) from city;
 -- null값을 제외할 경우 -> "where city is not null" 를 추가해준다.
 
+-- 11. 영화배우의 이름 (이름+' '+성) 에 대해서,  대문자로 이름을 보여주세요.  단 고객의 이름이 동일한 사람이 있다면,  중복 제거하고, 알려주세요.
+-- upper 함수를 통해서 대문자로 변경할 수 있다.
+select distinct(upper(first_name||''||last_name))
+from actor;
 
+-- 12	고객 중에서,  active 상태가 0 인 즉 현재 사용하지 않고 있는 고객의 수를 알려주세요.
+-- 간단한 조건문을 사용하여 조회하는 문제이다.
+select count(customer_id) from customer 
+where active =0;
 
+-- 13	Customer 테이블을 활용하여,  store_id = 1 에 매핑된  고객의 수는 몇명인지 확인해보세요.
+-- 간단한 조건문을 사용하여 조회하는 문제이다.
+select count(customer_id) from customer 
+where store_id =1;
 
+-- 14	rental 테이블을 활용하여,  고객이 return 했던 날짜가 2005년6월20일에 해당했던 rental 의 갯수가 몇개였는지 확인해보세요.
+-- date함수를 사용하여 날짜를 원하는 형태로 변경하는 문제이다.
+select count(rental_id) from rental 
+where date(return_date) = '2005-06-20' ;
 
+-- 15	film 테이블을 활용하여, 2006년에 출시가 되고 rating 이 'G' 등급에 해당하며, 대여기간이 3일에 해당하는  것에 대한 film 테이블의 모든 컬럼을 알려주세요.
+-- 비교연산자를 활용하여 여러가지 조건을 사용하는 문제이다.
+select * from film
+where release_year = 2006 and rating ='G' and rental_duration =3;
 
+-- 16	langugage 테이블에 있는 id, name 컬럼을 확인해보세요 .
+select language_id, name from language;  
 
+-- 17	film 테이블을 활용하여,  rental_duration 이  7일 이상 대여가 가능한  film 에 대해서  film_id,   title,  description 컬럼을 확인해보세요.
+select film_id, title, description from film
+where rental_duration >=7;
+
+-- 18	film 테이블을 활용하여,  rental_duration   대여가 가능한 일자가 3일 또는 5일에 해당하는  film_id,  title, desciption 을 확인해주세요.
+-- 비교연산자를 활용하는 문제이다.
+select film_id ,title, description from film
+where rental_duration =3 or rental_duration  =5;
+
+-- 19	Actor 테이블을 이용하여,  이름이 Nick 이거나  성이 Hunt 인  배우의  id 와  이름, 성을 확인해주세요.
+-- 비교연산자를 활용하는 문제이다.
+select * from actor
+where first_name ='Nick' or last_name ='Hunt';
+
+-- 20	Actor 테이블을 이용하여, Actor 테이블의  first_name 컬럼과 last_name 컬럼을 , firstname, lastname 으로 컬럼명을 바꿔서 보여주세요
+-- as를 활용하 컬럼명을 원하는 형태로 만들수 있다.
+select first_name as firstname, last_name as lastname from actor;
