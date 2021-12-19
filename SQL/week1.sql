@@ -1,3 +1,4 @@
+-- < 실습문제 1 >
 -- 1. Dvd 렌탈 업체의 dvd대여가 있었던 날짜를 확인해주세요.
 -- 날짜는 중복이 되기때문에 "distinct"를 반드시 넣어주어야 하며, 시간을 추출하는 "date" 함수 역시 실제로 많이 활용된다.
 select distinct(date(rental_date)) from rental;
@@ -90,3 +91,55 @@ where first_name ='Nick' or last_name ='Hunt';
 -- 20	Actor 테이블을 이용하여, Actor 테이블의  first_name 컬럼과 last_name 컬럼을 , firstname, lastname 으로 컬럼명을 바꿔서 보여주세요
 -- as를 활용하 컬럼명을 원하는 형태로 만들수 있다.
 select first_name as firstname, last_name as lastname from actor;
+
+
+-- < 실습문제2 >
+-- 1. film 테이블을 활용하여,  film 테이블의  100개의 row 만 확인해보세요.
+select * from film
+limit 100;
+
+-- 2. actor 의 성(last_name) 이  Jo 로 시작하는 사람의 id 값이 가장 낮은 사람 한사람에 대하여, 사람의  id 값과  이름, 성 을 알려주세요.
+select * from actor
+where last_name like 'Jo%';
+
+-- 3. film 테이블을 이용하여, film 테이블의 아이디값이 1~10 사이에 있는 모든 컬럼을 확인해주세요.
+select * from film
+where film_id >= 1 and film_id <= 10;
+
+-- 4. country 테이블을 이용하여, country 이름이 A 로 시작하는 country 를 확인해주세요.
+select * from country
+where country like 'A%';
+
+-- 5. country 테이블을 이용하여, country 이름이 s 로 끝나는 country 를 확인해주세요.
+select * from country
+where country like '%s';
+ 
+-- 6. address 테이블을 이용하여, 우편번호(postal_code) 값이 77로 시작하는  주소에 대하여, address_id, address, district ,postal_code  컬럼을 확인해주세요.
+select address_id, address, district ,postal_code from address
+where postal_code like '77%';
+
+-- 7. address 테이블을 이용하여, 우편번호(postal_code) 값이  두번째글자가 1인 우편번호의  address_id, address, district ,postal_code  컬럼을 확인해주세요.
+select address_id, address, district ,postal_code from address
+where postal_code like '_1%';
+
+8. payment 테이블을 이용하여,  고객번호가 341에 해당 하는 사람이 결제를 2007년 2월 15~16일 사이에 한 모든 결제내역을 확인해주세요.
+
+9. payment 테이블을 이용하여, 고객번호가 355에 해당 하는 사람의 결제 금액이 1~3원 사이에 해당하는 모든 결제 내역을 확인해주세요.
+
+10. customer 테이블을 이용하여, 고객의 이름이 Maria, Lisa, Mike 에 해당하는 사람의 id, 이름, 성을 확인해주세요.
+
+11. film 테이블을 이용하여,  film의 길이가  100~120 에 해당하거나 또는 rental 대여기간이 3~5일에 해당하는 film 의 모든 정보를 확인해주세요.
+
+12. address 테이블을 이용하여, postal_code 값이  공백('') 이거나 35200, 17886 에 해당하는 address 에 모든 정보를 확인해주세요.
+
+13. address 테이블을 이용하여,  address 의 상세주소(=address2) 값이  존재하지 않는 모든 데이터를 확인하여 주세요.
+
+14. staff 테이블을 이용하여, staff 의  picture  사진의 값이 있는  직원의  id, 이름,성을 확인해주세요.  단 이름과 성을  하나의 컬럼으로 이름, 성의형태로  새로운 컬럼 name 컬럼으로 도출해주세요.
+
+15. rental 테이블을 이용하여,  대여는했으나 아직 반납 기록이 없는 대여건의 모든 정보를 확인해주세요.
+
+16. address 테이블을 이용하여, postal_code 값이  빈 값(NULL) 이거나 35200, 17886 에 해당하는 address 에 모든 정보를 확인해주세요.
+
+17. 고객의 성에 John 이라는 단어가 들어가는, 고객의 이름과 성을 모두 찾아주세요.
+
+18. 주소 테이블에서, address2 값이 null 값인 row 전체를 확인해볼까요?
