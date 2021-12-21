@@ -85,7 +85,7 @@ where rental_duration =3 or rental_duration  =5;
 
 -- 19	Actor 테이블을 이용하여,  이름이 Nick 이거나  성이 Hunt 인  배우의  id 와  이름, 성을 확인해주세요.
 -- 비교연산자를 활용하는 문제이다.
-select * from actor
+select actor_id, first_name, last_name from actor
 where first_name ='Nick' or last_name ='Hunt';
 
 -- 20	Actor 테이블을 이용하여, Actor 테이블의  first_name 컬럼과 last_name 컬럼을 , firstname, lastname 으로 컬럼명을 바꿔서 보여주세요
@@ -99,12 +99,12 @@ select * from film
 limit 100;
 
 -- 2. actor 의 성(last_name) 이  Jo 로 시작하는 사람의 id 값이 가장 낮은 사람 한사람에 대하여, 사람의  id 값과  이름, 성 을 알려주세요.
-select * from actor
+select actor_id , first_name, last_name  from actor
 where last_name like 'Jo%';
 
 -- 3. film 테이블을 이용하여, film 테이블의 아이디값이 1~10 사이에 있는 모든 컬럼을 확인해주세요.
 select * from film
-where film_id >= 1 and film_id <= 10;
+where film_id between 1 and 10;
 
 -- 4. country 테이블을 이용하여, country 이름이 A 로 시작하는 country 를 확인해주세요.
 select * from country
@@ -128,29 +128,36 @@ where customer_id = 341 and date(payment_date) >= '2007-02-15' and date(payment_
 
 -- 9. payment 테이블을 이용하여, 고객번호가 355에 해당 하는 사람의 결제 금액이 1~3원 사이에 해당하는 모든 결제 내역을 확인해주세요.
 select * from payment 
-where customer_id = 355 and amount >=1 and amount <=3;
+where customer_id = 355 and amount between 1 and 3;
 
 -- 10. customer 테이블을 이용하여, 고객의 이름이 Maria, Lisa, Mike 에 해당하는 사람의 id, 이름, 성을 확인해주세요.
 select customer_id, first_name, last_name from customer 
-where first_name ='Maria' or first_name  = 'Lisa' or first_name = 'Mike';
+where first_name in ('Maria', 'Lisa', 'Mike');
 
 -- 11. film 테이블을 이용하여,  film의 길이가  100~120 에 해당하거나 또는 rental 대여기간이 3~5일에 해당하는 film 의 모든 정보를 확인해주세요.
 select * from film
-where (length >=100 and length <=120) or (rental_duration >=3 and rental_duration <=5);
+where (length between 100 and 120) or (rental_duration between 3 and 5);
 
 -- 12. address 테이블을 이용하여, postal_code 값이  공백('') 이거나 35200, 17886 에 해당하는 address 에 모든 정보를 확인해주세요.
 select * from address
-where postal_code = '' or postal_code = '35200' or postal_code = '17886'
+where postal_code in('','35200','17886');
 
 -- 13. address 테이블을 이용하여,  address 의 상세주소(=address2) 값이  존재하지 않는 모든 데이터를 확인하여 주세요.
+select * from address
+where address2 is null or address2 ='';
 
+-- 14. staff 테이블을 이용하여, staff 의  picture  사진의 값이 있는  직원의  id, 이름,성을 확인해주세요.  단 이름과 성을  하나의 컬럼으로 이름, 성의형태로  새로운 컬럼 name 컬럼으로 도출해주세요.
+select first_name ||', '||last_name as name from staff 
+where picture is not null;
 
-14. staff 테이블을 이용하여, staff 의  picture  사진의 값이 있는  직원의  id, 이름,성을 확인해주세요.  단 이름과 성을  하나의 컬럼으로 이름, 성의형태로  새로운 컬럼 name 컬럼으로 도출해주세요.
+-- 15. rental 테이블을 이용하여,  대여는했으나 아직 반납 기록이 없는 대여건의 모든 정보를 확인해주세요.
+select * from rental 
+where rental_date is not null and return_date is null ;
 
-15. rental 테이블을 이용하여,  대여는했으나 아직 반납 기록이 없는 대여건의 모든 정보를 확인해주세요.
+-- 16. address 테이블을 이용하여, postal_code 값이  빈 값(NULL) 이거나 35200, 17886 에 해당하는 address 에 모든 정보를 확인해주세요.
+select * from address 
+where postal_code is null or postal_code in ('35200', '17886');
 
-16. address 테이블을 이용하여, postal_code 값이  빈 값(NULL) 이거나 35200, 17886 에 해당하는 address 에 모든 정보를 확인해주세요.
-
-17. 고객의 성에 John 이라는 단어가 들어가는, 고객의 이름과 성을 모두 찾아주세요.
-
-18. 주소 테이블에서, address2 값이 null 값인 row 전체를 확인해볼까요?
+-- 17. 고객의 성에 John 이라는 단어가 들어가는, 고객의 이름과 성을 모두 찾아주세요.
+select * from address
+where address2 is null;
