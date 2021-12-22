@@ -1,4 +1,6 @@
 -- < 실습문제 1 >
+
+
 -- 1. Dvd 렌탈 업체의 dvd대여가 있었던 날짜를 확인해주세요.
 -- 날짜는 중복이 되기때문에 "distinct"를 반드시 넣어주어야 하며, 시간을 추출하는 "date" 함수 역시 실제로 많이 활용된다.
 select distinct(date(rental_date)) from rental;
@@ -94,6 +96,8 @@ select first_name as firstname, last_name as lastname from actor;
 
 
 -- < 실습문제2 >
+
+
 -- 1. film 테이블을 활용하여,  film 테이블의  100개의 row 만 확인해보세요.
 select * from film
 limit 100;
@@ -161,3 +165,24 @@ where postal_code is null or postal_code in ('35200', '17886');
 -- 17. 고객의 성에 John 이라는 단어가 들어가는, 고객의 이름과 성을 모두 찾아주세요.
 select * from address
 where address2 is null;
+
+
+-- < 퀴즈 >
+
+-- 1. 각 제품 가격을 5 % 줄이려면 어떻게 해야 할까요?
+select retailprice * 0.95 as sale_price from products;
+
+-- 2. 고객이 주문한 목록을 주문 일자로 내림차순 정렬해서 보여주세요.
+select * from orders o
+order by orderdate;
+
+-- 3. employees 테이블을 이용하여, 705 아이디를 가진 직원의 , 이름, 성과  해당 직원의  태어난 해를 확인해주세요.
+-- 사실 해당문제는 나는 mysql을 사용하기 때문에 스터디에서 사용한 postgresql에서는 달랐기 때문에 인터넷으로 찾아보고 풀었다.
+select empfirstname, emplastname, to_char(empbirthdate,'YYYY') from employees e 
+where employeeid =705;
+
+-- 4. customers 테이블을 이용하여,  고객의 이름과 성을 하나의 컬럼으로 전체 이름을 보여주세요 (이름, 성 의 형태로  full_name 이라는 이름으로 보여주세요)
+-- 해당 문제역시 mysql 에서는 || 대신 concat 함수를 사용한다.
+select custfirstname||', '||custlastname as full_name  from customers;
+
+
