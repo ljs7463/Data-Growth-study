@@ -185,4 +185,28 @@ where employeeid =705;
 -- 해당 문제역시 mysql 에서는 || 대신 concat 함수를 사용한다.
 select custfirstname||', '||custlastname as full_name  from customers;
 
+-- 5.  orders 테이블을 활용하여, 고객번호가 1001 에 해당하는 사람이 employeeid 가 707인 직원으로부터  산 주문의 id 와 주문 날짜를 알려주세요.(* 주문일자 빠른순으로 정렬하여, 보여주세요.)
+select customerid, orderdate from orders 
+where customerid = 1001 and employeeid = 707
+order by orderdate;
+
+-- 6. vendors 테이블을 이용하여, 벤더가 위치한 state 주가 어떻게 되는지, 확인해보세요.  중복된 주가 있다면, 중복제거 후에 알려주세요.
+select distinct(vendstate) from vendors;
+
+-- 7. 주문일자가  2017-09-02~ 09-03일 사이에 해당하는 주문 번호를 알려주세요.
+select ordernumber from orders
+where orderdate between '2017-09-02' and '2017-09-03';
+
+-- 8. products 테이블을 활용하여, productdescription에 상품 상세 설명 값이 없는  상품 데이터를 모두 알려주세요.
+select * from products
+where productdescription is null;
+
+-- 9. vendors 테이블을 이용하여, vendor의 State 지역이 NY 또는 WA 인 업체의 이름을 알려주세요.
+select vendname from vendors
+where vendstate in ('NY', 'WA');
+
+-- 10. customers 테이블을 이용하여, 고객의 id 별로,  custstate 지역 중 WA 지역에 사는 사람과  WA 가 아닌 지역에 사는 사람을 구분해서  보여주세요.
+-- * customerid 와, newstate_flag 컬럼으로 구성해주세요 .
+-- * newstate_flag 컬럼은 WA 와 OTHERS 로 노출해주시면 됩니다.
+
 
