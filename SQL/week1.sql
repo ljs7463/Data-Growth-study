@@ -208,5 +208,12 @@ where vendstate in ('NY', 'WA');
 -- 10. customers 테이블을 이용하여, 고객의 id 별로,  custstate 지역 중 WA 지역에 사는 사람과  WA 가 아닌 지역에 사는 사람을 구분해서  보여주세요.
 -- * customerid 와, newstate_flag 컬럼으로 구성해주세요 .
 -- * newstate_flag 컬럼은 WA 와 OTHERS 로 노출해주시면 됩니다.
+select customerid ,
+case when custstate ='WA' then 'WA' else 'The others' end as newstate_flag
+from customers 
 
+-- 10번 문제를 이해못해서 서브쿼리를 통해서 id별로 나열은 하지않은채로 따로 불러온 코드를 작성했었다... 문제르 잘읽자 ㅠㅠㅠ 
+-- select t1.custstate as table1, t2.custstate as table2
+-- from (select c2.custstate from customers c2 where c2.custstate = 'WA') as t1, 
+-- (select c3.custstate from customers c3 where c3.custstate not in ('WA')) as t2;
 
