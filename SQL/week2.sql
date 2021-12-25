@@ -27,6 +27,11 @@ left join staff s on c.address_id = s.address_id;
 
 -- 문제5번) [seth.hannon@sakilacustomer.org](mailto:seth.hannon@sakilacustomer.org) 이메일 주소를 가진 고객의  주소 address, address2, postal_code, phone, city 주소를 알려주세요.
 
+select address.address,  address.address2, address.postal_code , address.phone , city.city
+from customer
+join address on customer.address_id = address.address_id
+join city on  address.city_id = city.city_id
+where customer.email ='seth.hannon@sakilacustomer.org'
 문제6번) Jon Stephens 직원을 통해 dvd대여를 한 payment 기록 정보를  확인하려고 합니다.
 - payment_id,  고객 이름 과 성,  rental_id, amount, staff 이름과 성을 알려주세요.
 
