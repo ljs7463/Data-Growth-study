@@ -27,13 +27,17 @@ left join staff s on c.address_id = s.address_id;
 
 -- 문제5번) [seth.hannon@sakilacustomer.org](mailto:seth.hannon@sakilacustomer.org) 이메일 주소를 가진 고객의  주소 address, address2, postal_code, phone, city 주소를 알려주세요.
 
-select address.address,  address.address2, address.postal_code , address.phone , city.city
-from customer
-join address on customer.address_id = address.address_id
-join city on  address.city_id = city.city_id
-where customer.email ='seth.hannon@sakilacustomer.org'
-문제6번) Jon Stephens 직원을 통해 dvd대여를 한 payment 기록 정보를  확인하려고 합니다.
-- payment_id,  고객 이름 과 성,  rental_id, amount, staff 이름과 성을 알려주세요.
+SELECT a.address, a.address2, a.postal_code, a.phone, c2.city from customer c 
+left join address a on c.address_id =a.address_id 
+left join city c2 on a.city_id =c2.city_id 
+where email = 'seth.hannon@sakilacustomer.org';
+
+-- 문제6번) Jon Stephens 직원을 통해 dvd대여를 한 payment 기록 정보를  확인하려고 합니다.(payment_id,  고객 이름 과 성,  rental_id, amount, staff 이름과 성을 알려주세요.)
+
+select p.payment_id, c.first_name, c.last_name, p.rental_id, p.amount, s.first_name, s.last_name from payment p 
+left join staff s on p.staff_id = s.staff_id 
+left join customer c  on p.customer_id = c.customer_id 
+where s.last_name = 'Stephens';
 
 문제7번) 배우가 출연하지 않는 영화의 film_id, title, release_year, rental_rate, length 를 알려주세요.
 
