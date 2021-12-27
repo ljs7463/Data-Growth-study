@@ -83,7 +83,14 @@ order by f.length;
 
 -- 문제13번) actor 테이블을 이용하여,  배우의 ID, 이름, 성 컬럼에 추가로    'Angels Life' 영화에 나온 영화 배우 여부를 Y , N 으로 컬럼을 추가 표기해주세요.  해당 컬럼은 angelslife_flag로 만들어주세요.
 
-
+"""
+첫번째 풀이로 아래와 같이 풀었으나 join을 두개르 사용하다보니 두개의 한개의 아이디에 여러가지 필름에대한 중복이나타난다...join에 대해 다음날 천천히 연구해서 풀어볼것읻.
+select a.actor_id, a.first_name, a.last_name, 
+case when f.title = 'Angels Life' then 'Y' else 'N' end as angelslife_flag
+FROM actor a
+inner join film_actor fa on a.actor_id = fa.actor_id 
+inner join film f on fa.film_id = f.film_id;
+"""
 
 문제14번) 대여일자가 2005-06-01~ 14일에 해당하는 주문 중에서 , 직원의 이름(이름 성) = 'Mike Hillyer' 이거나  고객의 이름이 (이름 성) ='Gloria Cook'  에 해당 하는 rental 의 모든 정보를 알려주세요.
 
