@@ -39,13 +39,32 @@ left join staff s on p.staff_id = s.staff_id
 left join customer c  on p.customer_id = c.customer_id 
 where s.last_name = 'Stephens';
 
-문제7번) 배우가 출연하지 않는 영화의 film_id, title, release_year, rental_rate, length 를 알려주세요.
+-- 문제7번) 배우가 출연하지 않는 영화의 film_id, title, release_year, rental_rate, length 를 알려주세요.
 
-문제8번) store 상점 id별 주소 (address, address2, distict) 와 해당 상점이 위치한 city 주소를 알려주세요.
+SELECT f.film_id, f.title, f.release_year, f.rental_rate, f.length FROM film f
+left join film_actor fa on f.film_id = fa.film_id
+where fa.actor_id is null;
 
-문제9번) 고객의 id 별로 고객의 이름 (first_name, last_name), 이메일, 고객의 주소 (address, district), phone번호, city, country 를 알려주세요.
+-- 문제8번) store 상점 id별 주소 (address, address2, distict) 와 해당 상점이 위치한 city 주소를 알려주세요.
 
-문제10번) country 가 china 가 아닌 지역에 사는, 고객의 이름(first_name, last_name)과 , email, phonenumber, country, city 를 알려주세요
+select s.store_id, a.address, a.address2, a.district, c.city from store s 
+inner join address a on s.address_id = a.address_id 
+inner join city c on a.city_id = c.city_id;
+
+-- 문제9번) 고객의 id 별로 고객의 이름 (first_name, last_name), 이메일, 고객의 주소 (address, district), phone번호, city, country 를 알려주세요.
+
+select c.first_name, c.last_name, c.email, a.address, a.district, a.phone, c2.city, c3.country_id from customer c 
+left join address a on c.address_id = a.address_id 
+left join city c2 on a.city_id = c2.city_id 
+left join country c3 on c2.country_id = c3.country_id;
+
+-- 문제10번) country 가 china 가 아닌 지역에 사는, 고객의 이름(first_name, last_name)과 , email, phonenumber, country, city 를 알려주세요
+
+select c3.first_name, c3.last_name, c3.email, a.phone, c2.country_id, c2.city from country c 
+left join city c2 on c.country_id = c2.country_id 
+left join address a on c2.city_id  = a.city_id 
+left join customer c3 on a.address_id = c3.address_id 
+where c.country not in ('china');
 
 문제11번) Horror 카테고리 장르에 해당하는 영화의 이름과 description 에 대해서 알려주세요
 
