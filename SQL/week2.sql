@@ -1,3 +1,5 @@
+< 2-3 >
+
 -- 문제1번) 고객의 기본 정보인, 고객 id, 이름, 성, 이메일과 함께 고객의 주소 address, district, postal_code, phone 번호를 함께 보여주세요.
 
 select customer_id, first_name, last_name, email, a.address, a.district, a.postal_code, a.phone 
