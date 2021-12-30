@@ -138,6 +138,10 @@ having count(fa.actor_id) > 10;
 
 -- 문제4번) 영화 배우(actor)들이 출연한 영화는 각각 몇 편인가요?( 영화 배우의 이름 , 성 과 함께 출연 영화 수를 알려주세요.)
 
+select a.first_name , a.last_name, count(f.film_id) from film f
+inner join film_actor fa on f.film_id = fa.film_id 
+inner join actor a on fa.actor_id =a.actor_id 
+group by a.actor_id;
 
 
 -- 문제5번) 국가(country)별 고객(customer) 는 몇명인가요?
