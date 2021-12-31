@@ -146,20 +146,62 @@ group by a.actor_id;
 
 -- 문제5번) 국가(country)별 고객(customer) 는 몇명인가요?
 
+select c3.country ,count(c.customer_id) from customer c 
+inner join address a on c.address_id = a.address_id 
+inner join city c2 on a.city_id = c2.city_id 
+inner join country c3 on c2.city_id =c3.country_id 
+group by c3.country;
+
 -- 문제6번) 영화 재고 (inventory) 수량이 3개 이상인 영화(film) 는?( store는 상관 없이 확인해주세요. )
+
+select f.title, count(i.inventory_id) as count_inventory
+from film f
+inner join inventory i ON f.film_id = i.film_id 
+group by f.title 
+having count(i.inventory_id) >=3;
 
 -- 문제7번) dvd 대여를 제일 많이한 고객 이름은?
 
+select c.first_name,c.last_name,count(p.payment_id) from customer c 
+inner join rental r on c.customer_id = r.customer_id 
+inner join payment p on r.rental_id = p.rental_id 
+group by c.first_name, c.last_name 
+order by count(p.payment_id) desc 
+limit 1;
+
 -- 문제8번) rental 테이블을  기준으로,   2005년 5월26일에 대여를 기록한 고객 중, 하루에 2번 이상 대여를 한 고객의 ID 값을 확인해주세요.
 
+select r.customer_id, count(r.rental_id) from rental r 
+where date(r.rental_date) ='2005-05-26' 
+group by r.customer_id 
+having count(distinct(r.rental_id)) >=2;
+  
 -- 문제9번) film_actor 테이블을 기준으로, 출현한 영화의 수가 많은  5명의 actor_id 와 , 출현한 영화 수 를 알려주세요.
 
--- 문제10번) payment 테이블을 기준으로,  결제일자가 2007년2월15일에 해당 하는 주문 중에서  ,  하루에 2건 이상 주문한 고객의  총 결제 금액이 10달러 이상인 고객에 대해서 알려주세요.
-(고객의 id,  주문건수 , 총 결제 금액까지 알려주세요)
+select fa.actor_id, count(fa.film_id) from film_actor fa 
+group by fa.actor_id 
+order by count(fa.film_id) desc
+limit 5;
+
+-- 문제10번) payment 테이블을 기준으로,  결제일자가 2007년2월15일에 해당 하는 주문 중에서  ,  하루에 2건 이상 주문한 고객의  총 결제 금액이 10달러 이상인 고객에 대해서 알려주세요.(고객의 id,  주문건수 , 총 결제 금액까지 알려주세요)
+
+select p.customer_id,count(p.payment_id) ,sum(p.amount) from payment p 
+where date(p.payment_date) ='2007-02-15'
+group by p.customer_id 
+having count(p.payment_id) >=2 and sum(p.amount)>=10;
 
 -- 문제11번) 사용되는 언어별 영화 수는?
 
+select l.name, count(f.film_id) from film f
+inner join language l on f.language_id = l.language_id
+group by l.name; 
+
 -- 문제12번) 40편 이상 출연한 영화 배우(actor) 는 누구인가요?
+
+select a.actor_id , count(fa.film_id) from actor a 
+inner join film_actor fa on a.actor_id =fa.actor_id 
+group by a.actor_id 
+having count(fa.film_id)>=40;
 
 -- 문제13번) 고객 등급별 고객 수를 구하세요. (대여 금액 혹은 매출액  에 따라 고객 등급을 나누고 조건은 아래와 같습니다.)
 /*
