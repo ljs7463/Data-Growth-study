@@ -216,5 +216,16 @@ HINT
 반올림 하는 함수는 ROUND 입니다.	
 */
 
+select sq.amount, count(sq.*) 
+from (select c.customer_id, 
+		case when sum(round(p.amount)) >= 151 then 'A'
+			 when sum(round(p.amount)) between 101 and 150 then 'B'
+			 when sum(round(p.amount)) between 51 and 100 then 'C'
+			 when sum(round(p.amount)) <= 50 then 'D' end as amount 
+	  from customer c 
+	inner join rental r on c.customer_id = r.customer_id
+	inner join payment p on r.rental_id = p.rental_id
+	group by c.customer_id) as sq
+group by sq.amount
 
 
