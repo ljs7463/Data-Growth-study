@@ -273,14 +273,15 @@ where f2.title ='Alone Trip';
 - union, unionall, intersect, except 중 상황에 맞게 사용해주세요.
 */
 
-select fa.actor_id from film f 
+select distinct(fa.actor_id) from film f 
 inner join film_actor fa on f.film_id = fa.film_id 
 where f.rating ='G'
 except 
-select fa2.actor_id from film f2 
+select distinct(fa2.actor_id) from film f2 
 inner join film_actor fa2 on f2.film_id = fa2.film_id 
 group by fa2.actor_id 
 having count(fa2.film_id) >= 20;
+
 
 
 
@@ -289,9 +290,9 @@ having count(fa2.film_id) >= 20;
 - category 테이블을 이용해서 알려주세요.
 */
 
-select f.film_id from film f 
+select DISTINCT(f.film_id) from film f 
 except
-select f2.film_id from film f2 
+select DISTINCT(f2.film_id) from film f2 
 inner join film_category fc on f2.film_id =fc.film_id 
 inner join category c on fc.category_id = c.category_id 
 where c."name" in ('Action', 'Animation', 'Horror')
