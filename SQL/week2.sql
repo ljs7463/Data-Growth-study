@@ -241,6 +241,13 @@ group by sq.amount
 - actor_id 가 동일한 flag 값 이 여러개 나오지 않도록 해주세요.
 */
 
+select fa.actor_id , 'length_over_180' as flag from film f 
+inner join film_actor fa on f.film_id = fa.film_id 
+where f.length >= 180 
+union 
+select fa.actor_id, 'rating_R' as flag from film f 
+inner join film_actor fa on f.film_id = fa.film_id 
+where f.rating ='R';
 
 
 
@@ -250,6 +257,15 @@ group by sq.amount
 - union, unionall, intersect, except 중 상황에 맞게 사용해주세요.
 */
 
+select fa.actor_id from film f 
+inner join film_actor fa on f.film_id = fa.film_id 
+where f.rating ='R'
+intersect 
+select fa2.actor_id from film f2 
+inner join film_actor fa2 on f2.film_id = fa2.film_id 
+where f2.title ='Alone Trip';
+
+
 
 -- 문제3번) G 등급에 해당하는 필름을 찍었으나,   영화를 20편이상 찍지 않은 영화배우의 ID 를 확인해주세요.
 /*
@@ -257,17 +273,35 @@ group by sq.amount
 - union, unionall, intersect, except 중 상황에 맞게 사용해주세요.
 */
 
+select fa.actor_id from film f 
+inner join film_actor fa on f.film_id = fa.film_id 
+where f.rating ='G'
+except 
+select fa2.actor_id from film f2 
+inner join film_actor fa2 on f2.film_id = fa2.film_id 
+group by fa2.actor_id 
+having count(fa2.film_id) >= 20;
+
+
 
 --문제4번) 필름 중에서,  필름 카테고리가 Action, Animation, Horror 에 해당하지 않는 필름 아이디를 알려주세요.
 /*
 - category 테이블을 이용해서 알려주세요.
 */
 
+select f.film_id from film f 
+except
+select f2.film_id from film f2 
+inner join film_category fc on f2.film_id =fc.film_id 
+inner join category c on fc.category_id = c.category_id 
+where c."name" in ('Action', 'Animation', 'Horror')
+
 
 -- 문제5번) Staff  의  id , 이름, 성 에 대한 데이터와 , Customer 의 id, 이름 , 성에 대한 데이터를  하나의  데이터셋의 형태로 보여주세요.
 /*
 - 컬럼 구성 : id, 이름 , 성, flag (직원/고객여부) 로 구성해주세요.
 */
+
 
 
 -- 문제6번) 직원과  고객의 이름이 동일한 사람이 혹시 있나요? 있다면, 해당 사람의 이름과 성을 알려주세요.
