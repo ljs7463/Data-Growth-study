@@ -303,7 +303,11 @@ where c."name" in ('Action', 'Animation', 'Horror')
 - 컬럼 구성 : id, 이름 , 성, flag (직원/고객여부) 로 구성해주세요.
 */
 
-
+select s.staff_id, s.first_name, s.last_name, '직원' as flag 
+from staff s 
+union all
+select c.customer_id, c.first_name, c.last_name, '고객' as flag 
+from customer c; 
 
 -- 문제6번) 직원과  고객의 이름이 동일한 사람이 혹시 있나요? 있다면, 해당 사람의 이름과 성을 알려주세요.
 
