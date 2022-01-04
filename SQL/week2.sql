@@ -297,6 +297,7 @@ inner join film_category fc on f2.film_id =fc.film_id
 inner join category c on fc.category_id = c.category_id 
 where c."name" in ('Action', 'Animation', 'Horror')
 
+-- except  절은 Distinct를 주의하자!(결과가 달라질 수 있음)
 
 -- 문제5번) Staff  의  id , 이름, 성 에 대한 데이터와 , Customer 의 id, 이름 , 성에 대한 데이터를  하나의  데이터셋의 형태로 보여주세요.
 /*
