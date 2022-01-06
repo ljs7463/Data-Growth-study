@@ -311,6 +311,13 @@ select c.customer_id, c.first_name, c.last_name, '고객' as flag
 from customer c; 
 
 -- 문제6번) 직원과  고객의 이름이 동일한 사람이 혹시 있나요? 있다면, 해당 사람의 이름과 성을 알려주세요.
+SELECT first_name,
+       last_name
+FROM   customer
+INTERSECT
+SELECT first_name,
+       last_name
+FROM   staff
 
 
 -- 문제7번) 반납이 되지 않은 대여점(store)별 영화 재고 (inventory)와 전체 영화 재고를 같이 구하세요. (union all)
