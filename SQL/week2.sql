@@ -322,5 +322,20 @@ FROM   staff
 
 -- 문제7번) 반납이 되지 않은 대여점(store)별 영화 재고 (inventory)와 전체 영화 재고를 같이 구하세요. (union all)
 
+SELECT null as null,
+       Count(*) cnt
+FROM   rental r
+       INNER JOIN inventory i
+               ON r.inventory_id = i.inventory_id
+WHERE  return_date IS NULL
+UNION ALL
+SELECT i.store_id,
+       Count(*) cnt
+FROM   rental r
+       INNER JOIN inventory i
+               ON r.inventory_id = i.inventory_id
+WHERE  return_date IS NULL
+GROUP  BY i.store_id
+
 -- 문제8번) 국가(country)별 도시(city)별 매출액, 국가(country)매출액 소계 그리고 전체 매출액을 구하세요. (union all)
 
