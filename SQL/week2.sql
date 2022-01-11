@@ -338,7 +338,7 @@ WHERE  return_date IS NULL
 GROUP  BY i.store_id
 
 -- 문제8번) 국가(country)별 도시(city)별 매출액, 국가(country)매출액 소계 그리고 전체 매출액을 구하세요. (union all)
-```sql
+
 SELECT cty.country,
        ct.city,
        Sum(p.amount) rental_amount
@@ -382,4 +382,3 @@ FROM   payment p
                ON cty.country_id = ct.country_id
 ORDER  BY 1,
           2;
-```
