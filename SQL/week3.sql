@@ -21,5 +21,15 @@ where c.customer_id in (
 
 -- 문제5번) dvd 대여를 제일 많이한 고객 이름은? (subquery 활용)
 
+SELECT c.first_name, c.last_name 
+from customer c
+where customer_id in ( 
+						select customer_id
+						from payment p 
+						group by customer_id 
+						order by count(payment_id) desc
+						limit 1
+);
+
 
 -- 문제6번) 영화 카테고리값이 존재하지 않는 영화가 있나요?
