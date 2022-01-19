@@ -41,6 +41,31 @@ join film_category as fc on i.film_id = fc.film_id
 
 -- 문제4번) 대여가 가장 많이 진행된 카테고리는 무엇인가요? (Any, All 조건 중 하나를 사용하여 풀어봅시다)
 
+select c.*
+
+from category as c
+
+where category_id = any (
+
+	select fc.category_id
+	
+	-- ,  count(distinct r.rental_id) as cnt
+	
+	from rental as r
+	
+	join inventory as i on r.inventory_id = i.inventory_id
+	
+	join film_category as fc on i.film_id = fc.film_id
+	
+	group by  fc.category_id
+	
+	order by  count(distinct r.rental_id) desc
+	
+	limit 1
+
+)
+
+;
 
 -- 문제5번) dvd 대여를 제일 많이한 고객 이름은? (subquery 활용)
 
