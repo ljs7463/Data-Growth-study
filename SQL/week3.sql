@@ -81,3 +81,16 @@ where customer_id in (
 
 
 -- 문제6번) 영화 카테고리값이 존재하지 않는 영화가 있나요?
+select *
+
+from  film as f
+
+where not exists (
+
+select *
+
+from film_category as fc
+
+where  f.film_id   = fc.film_id
+
+);
