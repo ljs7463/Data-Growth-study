@@ -108,6 +108,15 @@ having count(distinct vendorid) >3
 
 문제2번) 주문일자별, 고객의 아이디별로, 주문번호에 해당하는 주문 금액은 얼마인가요?
 
+select orderdate, customerid, ordernumber,sum(prices) as order_price
+from (
+        select o.orderdate, o.customerid, o.ordernumber, od.productnumber,
+                        od.quotedprice * od.quantityordered as prices
+        from orders as o
+             join order_details as od on o.ordernumber = od.ordernumber
+) as db  
+group by orderdate, customerid , ordernumber
+
 문제3번) 고객의 이름과, 직원의 정보를 하나의 이름 정보로 보여주세요.
 - 단 이름과 타입으로 컬럼을 구성하여 타입은 고객/직원의 타입에 따라 각각 customer, staff으로 값을 넣어주세요.
 
