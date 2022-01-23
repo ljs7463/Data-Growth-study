@@ -122,6 +122,27 @@ group by orderdate, customerid , ordernumber
 
 문제4번) 1번 주문 번호에 대해서, 상품명, 주문 금액과 1번 주문 금액에 대한 총 구매금액을 함께 보여주세요.
 
+select ordernumber , customerid , null as productnumber , sum(prices) as price 
+from (
+        select o.orderdate, o.customerid, o.ordernumber, od.productnumber,
+                        od.quotedprice * od.quantityordered as prices
+        from orders as o
+             join order_details as od on o.ordernumber = od.ordernumber
+        where o.ordernumber =1 
+) as db 
+group by ordernumber , customerid , ordernumber
+
+union all 
+
+select  ordernumber , customerid  , productnumber ,prices 
+from (
+        select o.orderdate, o.customerid, o.ordernumber, od.productnumber,
+                        od.quotedprice * od.quantityordered as prices
+        from orders as o
+             join order_details as od on o.ordernumber = od.ordernumber
+        where o.ordernumber =1 
+) as db 
+
 
 문제5번) 헬멧을 주문한 모든 고객과 자전거를 주문한 모든 고객을 나열하세요. (Union 활용) 헬멧과 자전거는 Products 테이블의 productname 컬럼을 이용해서 확인해주세요.
 
