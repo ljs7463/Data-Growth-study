@@ -147,7 +147,21 @@ from (
 문제5번) 헬멧을 주문한 모든 고객과 자전거를 주문한 모든 고객을 나열하세요. (Union 활용) 헬멧과 자전거는 Products 테이블의 productname 컬럼을 이용해서 확인해주세요.
 
 
-
+select o.customerid
+        from orders as o 
+             join order_details as od
+ on o.ordernumber = od.ordernumber
+             join products as p 
+on od.productnumber =p.productnumber
+        where p.productname like '%Bike'
+union 
+select o.customerid
+        from orders as o 
+             join order_details as od 
+on o.ordernumber = od.ordernumber
+             join products as p 
+on od.productnumber =p.productnumber
+        where p.productname like '%Helmet'
 문제6번) 고객이 구매 제품의 가격이, 평균 제품 소매 가격보다 높은 제품의 이름과 번호를 알려주세요.
 
 문제7번) 주문일자가 2017/09/01 ~ 2017/09/30 일에 해당하는 주문에 대해서
