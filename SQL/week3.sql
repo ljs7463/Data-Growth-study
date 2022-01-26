@@ -164,6 +164,21 @@ on od.productnumber =p.productnumber
         where p.productname like '%Helmet'
 문제6번) 고객이 구매 제품의 가격이, 평균 제품 소매 가격보다 높은 제품의 이름과 번호를 알려주세요.
 
+select distinct od.productnumber, p.productname , od.quotedprice
+from order_details as od 
+      join products as p on od.productnumber = p.productnumber
+where od.quotedprice >= (select avg(p.retailprice) as avg_p
+                                from products  as p )
+                                
+                     
+ 1,2,6,11                         
+                                  
+                            
+ 
+ select productnumber ,retailprice,  avg(retailprice) 
+ from products p 
+ group by productnumber ,retailprice
+
 문제7번) 주문일자가 2017/09/01 ~ 2017/09/30 일에 해당하는 주문에 대해서
 주문일자와 고객별로 주문 수를 확인해주세요.
 또한 고객별 주문 수도 함께 알려주세요.
