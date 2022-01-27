@@ -183,7 +183,10 @@ where od.quotedprice >= (select avg(p.retailprice) as avg_p
 주문일자와 고객별로 주문 수를 확인해주세요.
 또한 고객별 주문 수도 함께 알려주세요.
 
-
+select orderdate , customerid , count(distinct ordernumber) as cnt 
+from orders o 
+where orderdate  between '2017-09-01' and '2017-09-30'
+group by grouping sets ((orderdate,customerid), (customerid))
 
 
 문제8번) 주문일자가 2017/09/01 ~ 2017/09/30일에 해당하는 주문에 대해서,
