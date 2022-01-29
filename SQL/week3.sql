@@ -193,11 +193,33 @@ group by grouping sets ((orderdate,customerid), (customerid))
 주문일자와 고객별로 주문 수를 확인해주세요.
 또한 주문일자별 주문 수도 함께 알려주시고, 전체 주문 수도 함께 알려주세요.
 
+select orderdate , customerid , count(distinct ordernumber) as cnt 
+from orders o 
+where orderdate  between '2017-09-01' and '2017-09-30'
+group by rollup (orderdate,customerid)
 
 
 
 문제9번) 2017년도의 주문일 별 주문 금액과, 월별 주문 총 금액을 함께 보여주세요.
 동시에 일별 주문 금액이 월별 주문 금액에 해당하는 비율을 같이 보여주세요. (analytic function 활용)
+
+select orderdate, 
+           sum(product_price) over (partition by orderdate ) as day_price ,
+           sum(product_price) over (partition by mm ) as monthly_price,
+           sum(product_price) over (partition by orderdate )  / 
+           sum(product_price) over (partition by mm )  as perc
+from (
+       select mm , orderdate , sum(product_price) product_price
+       from 
+               (
+                        select o.ordernumber, orderdate, EXTRACT(month from o.orderdate) as mm, 
+                                   od.productnumber, od.quotedprice * od.quantityordered as product_price
+                        from orders as o 
+                             join order_details as od  on o.ordernumber= od.ordernumber 
+                        where o.orderdate between '2017-01-01' and '2017-12-31'
+                   ) dt  
+                group by mm , orderdate
+) as dt 
 
 
 
