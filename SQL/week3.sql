@@ -225,3 +225,13 @@ from (
 
 문제10번) 주문을 많이 한 고객 순서 대로 순위를 매겨 나열하세요. (analytic function 활용)
 - 같은 주문 수치 일 때, 같은 등수로 보여주세요.
+select  c.custfirstname || c.custlastname as cust_name  , o.customerid , order_cnt , 
+                DENSE_RANK() over(order by order_cnt  desc) drnk ,
+                rank () over(order by order_cnt  desc) rnk ,
+                row_number () over(order by order_cnt  desc) rnum 
+from 
+(
+  select o.customerid  , count(*) order_cnt 
+    from orders as o 
+   group by o.customerid 
+) o inner join customers as c on c.customerid = o.customerid
